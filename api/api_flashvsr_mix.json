@@ -1,0 +1,171 @@
+{
+  "19": {
+    "inputs": {
+      "aspect_ratio": "custom",
+      "proportional_width": [
+        "20",
+        0
+      ],
+      "proportional_height": [
+        "20",
+        1
+      ],
+      "fit": "fill",
+      "method": "lanczos",
+      "round_to_multiple": "None",
+      "scale_to_side": "width",
+      "scale_to_length": "{{OUT_WIDTH}}",
+      "background_color": "#000000",
+      "image": [
+        "28",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: ImageScaleByAspectRatio V2",
+    "_meta": {
+      "title": "按宽高比缩放_V2_输出"
+    }
+  },
+  "20": {
+    "inputs": {
+      "image": [
+        "21",
+        0
+      ]
+    },
+    "class_type": "easy imageSize",
+    "_meta": {
+      "title": "图像尺寸"
+    }
+  },
+  "21": {
+    "inputs": {
+      "batch_index": 38,
+      "length": 1,
+      "image": [
+        "25",
+        0
+      ]
+    },
+    "class_type": "ImageFromBatch",
+    "_meta": {
+      "title": "从批次获取图像"
+    }
+  },
+  "22": {
+    "inputs": {
+      "video_info": [
+        "25",
+        3
+      ]
+    },
+    "class_type": "VHS_VideoInfoLoaded",
+    "_meta": {
+      "title": "视频信息（已选中）"
+    }
+  },
+  "25": {
+    "inputs": {
+      "video": "{{VIDEO_PATH}}",
+      "force_rate": "{{VIDEO_FPS}}",
+      "custom_width": 0,
+      "custom_height": 0,
+      "frame_load_cap": "{{FRAMES_PER_BATCH}}",
+      "skip_first_frames": "{{FRAMES_SKIP}}",
+      "select_every_nth": 1,
+      "format": "AnimateDiff"
+    },
+    "class_type": "VHS_LoadVideo",
+    "_meta": {
+      "title": "加载视频"
+    }
+  },
+  "26": {
+    "inputs": {
+      "aspect_ratio": "original",
+      "proportional_width": 1,
+      "proportional_height": 1,
+      "fit": "fill",
+      "method": "lanczos",
+      "round_to_multiple": "128",
+      "scale_to_side": "width",
+      "scale_to_length": "{{IN_WIDTH}}",
+      "background_color": "#000000",
+      "image": [
+        "25",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: ImageScaleByAspectRatio V2",
+    "_meta": {
+      "title": "按宽高比缩放_V2_输入"
+    }
+  },
+  "28": {
+    "inputs": {
+      "scale": "{{scale}}",
+      "color_fix": true,
+      "tiled_vae": true,
+      "tiled_dit": "{{t_s}}",
+      "tile_size": "{{t_z}}",
+      "tile_overlap": "{{t_o}}",
+      "unload_dit": true,
+      "sparse_ratio": 2,
+      "kv_ratio": 3,
+      "local_range": 11,
+      "seed": 513708377300889,
+      "pipe": [
+        "29",
+        0
+      ],
+      "frames": [
+        "26",
+        0
+      ]
+    },
+    "class_type": "FlashVSRNodeAdv",
+    "_meta": {
+      "title": "FlashVSR Ultra-Fast (Advanced)"
+    }
+  },
+  "29": {
+    "inputs": {
+      "model": "FlashVSR-v1.1",
+      "mode": "tiny-long",
+      "alt_vae": "none",
+      "force_offload": true,
+      "precision": "fp16",
+      "device": "{{gpu}}",
+      "attention_mode": "{{attn_mode}}"
+    },
+    "class_type": "FlashVSRInitPipe",
+    "_meta": {
+      "title": "FlashVSR Init Pipeline"
+    }
+  },
+  "34": {
+    "inputs": {
+      "frame_rate": [
+        "22",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": "{{OUTPUT_PREFIX}}",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": true,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "19",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "合并为视频"
+    }
+  }
+}
